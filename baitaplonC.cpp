@@ -439,7 +439,7 @@ int main() {
     Kho_init(&a1, 3);
     Stores b1;
     Stores_init(&b1, 3);
-
+    printf("\n===========HE THONG QUAN LY VAN CHUYEN HANG HOA=============\n");
     do {
         printf("\n\t~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
         printf("\t|\t1. Hien thi.                            |\n");
