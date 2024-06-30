@@ -11,23 +11,29 @@ private:
 	int giaban;
 public:
 	MatHang(){};
-	MatHang(string _ten, int _maso, int _soluong, int _gianhap, int _giaban);
+	MatHang(string _ten, int _maso, int _soluong, int _gianhap, int _giaban){
+	ten=_ten;
+	maso=_maso;
+	soluong=_soluong;
+	gianhap=_gianhap;
+	giaban=_giaban;
+}
 
-	std::string get_name() const
-	{
+
+	string get_name() const{
 	    return ten ;
 	}
 
-	int get_maso(){
+	int get_maso()const{
 		return maso;
 	}
 	int get_soluong(){
 		return soluong;
 	}
-	int get_giaban(){
+	int get_giaban()const{
 		return giaban;
 	}
-	int get_gianhap(){
+	int get_gianhap()const{
 		return gianhap;
 	}
 
@@ -50,25 +56,7 @@ public:
         gianhap = _gianhap;
         giaban = _giaban;
     }
-
-    void Show()
-	{
-	    std::cout<<"Ten mat hang : "<<ten<<std::endl ;
-	    std::cout<<"Ma so mat hang : "<<maso<<std::endl ;
-	    std::cout<<"So luong mat hang la : "<<soluong<<std::endl ;
-	    std::cout<<"Gia nhap mat hang la : "<<gianhap<<std::endl ;
-	    std::cout<<"Gia ban mat hang la : "<<giaban<<std::endl ;
-	    std::cout<<std::endl ;
-	}
 };
-
-MatHang::MatHang(string _ten, int _maso, int _soluong, int _gianhap, int _giaban){
-	ten=_ten;
-	maso=_maso;
-	soluong=_soluong;
-	gianhap=_gianhap;
-	giaban=_giaban;
-}
 
 class CuaHang{
 private :
@@ -277,22 +265,8 @@ public:
 		}
 	}
 
-	 void hoaDonNhapKho(){
-    	int tongtien=0;
-    	cout<<"\n==================BILL==================\n";
-    	cout<<"Thong tin hang hoa da nhap them vao kho la: "<<endl;
-    	for(int i=count-dem, j=1;i<count, j<=dem; i++, j++ ){
-    		cout<<"Mat hang "<<j<<" :"<<endl;
-    		Hang[i].hienThi();
-    		int c= Hang[i].get_soluong(), d=Hang[i].get_gianhap();
-    		tongtien+=c*d;
-		}
-		cout<<"=====>Tong tien nhap hang la: "<< tongtien<<std::endl ;
-		dem=0;
-	}
-
 	void nhapKho(){
-		char c;
+		char c;int status=1;
 		do{
 			count++;
 			dem++;
@@ -306,7 +280,17 @@ public:
         string _ten;
         int _maso, _soluong, _gianhap, _giaban;
         cout << "Nhap ten san pham muon them: ";fflush(stdin); getline(cin, _ten);
+        do{
+        status=1;
         cout << "Nhap ma so san pham: "; cin >> _maso;
+        for(int i=0; i<count-1; i++)
+        if(newHang[i].get_maso()==_maso){
+		status=0;
+		break;
+	    }
+        if(status==0)
+        	cout<<"Mat hang voi ma so "<<_maso<<" da ton tai. Vui long nhap ma so khac!\n";
+		}while(status==0);
         cout << "Nhap so luong: "; cin >> _soluong;
         cout << "Nhap gia nhap kho: "; cin >> _gianhap;
         cout << "Nhap gia xuat kho: "; cin >> _giaban;
@@ -316,7 +300,17 @@ public:
 		cin.ignore();
         } while (c=='y');
 
-        hoaDonNhapKho() ;
+       int tongtien=0;
+    	cout<<"\n==================BILL==================\n";
+    	cout<<"Thong tin hang hoa da nhap them vao kho la: "<<endl;
+    	for(int i=count-dem, j=1;i<count, j<=dem; i++, j++ ){
+    		cout<<"Mat hang "<<j<<" :"<<endl;
+    		Hang[i].hienThi();
+    		int c= Hang[i].get_soluong(), d=Hang[i].get_gianhap();
+    		tongtien+=c*d;
+		}
+		cout<<"=====>Tong tien nhap hang la: "<< tongtien<<endl ;
+		dem=0;
     }
 
 	void timKiemHang(){
@@ -490,7 +484,7 @@ int main()
     int n ;
     Kho a1 ;
     Stores b1 ;
-
+    cout<<"\n===========HE THONG QUAN LY VAN CHUYEN HANG HOA=============\n";
     do{
         std::cout<<"\n\t~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n" ;
         std::cout<<"\t|\t1. Hien thi.                            |\n" ;
